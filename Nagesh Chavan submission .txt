@@ -1,0 +1,50 @@
+
+public class permutationString {
+    public static void main(String args[]) {
+        String pat="hack";
+        String txt="indiahacks";
+        
+        if(arePermutation(pat,txt))
+            System.out.print("yes");
+        else
+            System.out.print("no");
+    }
+
+    public static boolean arePermutation(String pat,String txt){
+        if(pat.length()>txt.length()){
+            return false;
+        }
+        int[] patData=new int[26];
+        int[] txtData=new int[26];
+        
+        for(int i=0;i<pat.length();i++){
+            patData[pat.charAt(i)-'a']++;
+            txtData[txt.charAt(i)-'a']++;
+        }
+        int windowStart = 0;
+        int windowEnd =pat.length();
+        
+        while(windowEnd<txt.length()){
+            if(matches(patData,txtData)){
+                return true;
+            }
+            txtData[txt.charAt(windowEnd)-'a']++;
+            txtData[txt.charAt(windowStart)-'a']--;
+            windowStart++;
+            windowEnd++;
+        }
+        if(matches(patData,txtData)){
+            return true;
+        }
+        return false;
+    }
+    
+    public static boolean matches(int[] patData,int[] txtData){
+        for(int i=0;i<26;i++){
+            if(patData[i] != txtData[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+}
